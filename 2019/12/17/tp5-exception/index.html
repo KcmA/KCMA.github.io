@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一个自定义的 TP5.0全局异常处理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tp5-exception">
+<meta property="og:url" content="http://yoursite.com/2019/12/17/tp5-exception/index.html">
+<meta property="og:site_name" content="旧岛">
+<meta property="og:description" content="一个自定义的 TP5.0全局异常处理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cdn.gdcema.cn/kc_exception.png">
+<meta property="article:published_time" content="2019-12-17T07:00:53.000Z">
+<meta property="article:modified_time" content="2020-07-15T16:07:18.000Z">
+<meta property="article:author" content="Kc Beaulo">
+<meta property="article:tag" content="TP5">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.gdcema.cn/kc_exception.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/17/tp5-exception/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>tp5-exception | 旧岛</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">旧岛</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">my lamwityee</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/17/tp5-exception/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/tx.jpg">
+      <meta itemprop="name" content="Kc Beaulo">
+      <meta itemprop="description" content="Kc的个人博客,lamwityee是她的名字">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="旧岛">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          tp5-exception
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-17 15:00:53" itemprop="dateCreated datePublished" datetime="2019-12-17T15:00:53+08:00">2019-12-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-16 00:07:18" itemprop="dateModified" datetime="2020-07-16T00:07:18+08:00">2020-07-16</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>一个自定义的 TP5.0全局异常处理。</p>
+<a id="more"></a>
+<h1 id="TP5-异常处理"><a href="#TP5-异常处理" class="headerlink" title="TP5-异常处理"></a>TP5-异常处理</h1><p><img src="http://cdn.gdcema.cn/kc_exception.png" alt="avatar"></p>
+<h1 id="异常处理示例一"><a href="#异常处理示例一" class="headerlink" title="异常处理示例一"></a>异常处理示例一</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getBanner</span><span class="params">($id)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//TODO 验证ID是否正整数</span></span><br><span class="line">    (<span class="keyword">new</span> IDMustBePostiveInt())-&gt;goCheck();</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        $banner = BannerModel::getBannerByID($id);</span><br><span class="line">    &#125;<span class="keyword">catch</span> (<span class="keyword">Exception</span> $ex)&#123;</span><br><span class="line">        $error = [</span><br><span class="line">            <span class="string">'error_code'</span> =&gt; <span class="number">10001</span>,</span><br><span class="line">            <span class="string">'msg'</span> =&gt; $ex-&gt;getMessage()</span><br><span class="line">        ];</span><br><span class="line">        <span class="keyword">return</span> json($error,<span class="number">400</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $banner;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这是普通的写法，直接捕获 处理</p>
+</blockquote>
+<h1 id="异常处理示例二"><a href="#异常处理示例二" class="headerlink" title="异常处理示例二"></a>异常处理示例二</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getBanner</span><span class="params">($id)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $data = [</span><br><span class="line">        <span class="string">'id'</span> =&gt; (int)$id</span><br><span class="line">    ];</span><br><span class="line">    <span class="comment">//TODO 验证ID是否正整数</span></span><br><span class="line">    (<span class="keyword">new</span> IDMustBePostiveInt())-&gt;goCheck($data);</span><br><span class="line"></span><br><span class="line">    $banner = BannerModel::getBannerByID($id);</span><br><span class="line">    <span class="keyword">if</span> (!$banner)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> BannerMissException();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> $banner;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>思路：<br>不想直接在 api接口写那么多捕获 抛出<br>自定义一个全局异常处理类</p>
+<blockquote>
+<p>修改配置<br>全局config文件<br>// 异常处理handle类 留空使用 \think\exception\Handle<br>‘exception_handle’ =&gt; &gt;’app\lib\exception\ExceptionHandle’</p>
+</blockquote>
+<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">lib</span>\<span class="title">exception</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="title">Exception</span>;   <span class="comment">//注意是 php的Exception 不是tp5的</span></span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">Request</span>;</span><br><span class="line"><span class="keyword">use</span> <span class="title">think</span>\<span class="title">exception</span>\<span class="title">Handle</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//异常处理类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExceptionHandle</span> <span class="keyword">extends</span> <span class="title">Handle</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">//所有异常都会抛到这里处理</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">render</span><span class="params">(Exception $ex)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> ($e <span class="keyword">instanceof</span> BaseException)&#123;</span><br><span class="line">            <span class="comment">//如果是自定义的异常</span></span><br><span class="line">            <span class="keyword">$this</span>-&gt;code = $e-&gt;code;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;msg = $e-&gt;msg;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;errorCode = $e-&gt;errorCode;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;code = <span class="number">500</span>;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;msg = <span class="string">'服务器内部错误'</span>;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;errorCode = <span class="number">999</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        $result = [</span><br><span class="line">            <span class="string">'msg'</span> =&gt; <span class="keyword">$this</span>-&gt;msg,</span><br><span class="line">            <span class="string">'error_code'</span> =&gt; <span class="keyword">$this</span>-&gt;errorCode,</span><br><span class="line">            <span class="string">'request_url'</span> =&gt; $request-&gt;url()</span><br><span class="line">        ];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> json($result,<span class="keyword">$this</span>-&gt;code);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义标准的返回结果"><a href="#定义标准的返回结果" class="headerlink" title="定义标准的返回结果"></a>定义标准的返回结果</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *BaseException.php</span></span><br><span class="line"><span class="comment"> *定义标准的返回结果</span></span><br><span class="line"><span class="comment"> *Create on 2019/12/16 20:26</span></span><br><span class="line"><span class="comment"> *Create by Kc</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">lib</span>\<span class="title">exception</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseException</span> <span class="keyword">extends</span> <span class="title">Exception</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">//http 状态码 404,202</span></span><br><span class="line">    <span class="keyword">public</span> $code = <span class="number">400</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//错误具体信息</span></span><br><span class="line">    <span class="keyword">public</span> $msg = <span class="string">'Parameter error'</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//自定义的错误码</span></span><br><span class="line">    <span class="keyword">public</span> $errorCode = <span class="number">10000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TP5/" rel="tag"># TP5</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/17/tp5-validate/" rel="prev" title="tp5-validate">
+      <i class="fa fa-chevron-left"></i> tp5-validate
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/17/tp5-log/" rel="next" title="tp5-log">
+      tp5-log <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TP5-异常处理"><span class="nav-number">1.</span> <span class="nav-text">TP5-异常处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常处理示例一"><span class="nav-number">2.</span> <span class="nav-text">异常处理示例一</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常处理示例二"><span class="nav-number">3.</span> <span class="nav-text">异常处理示例二</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#示例代码"><span class="nav-number">3.1.</span> <span class="nav-text">示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义标准的返回结果"><span class="nav-number">3.2.</span> <span class="nav-text">定义标准的返回结果</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kc Beaulo"
+      src="/images/tx.jpg">
+  <p class="site-author-name" itemprop="name">Kc Beaulo</p>
+  <div class="site-description" itemprop="description">Kc的个人博客,lamwityee是她的名字</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xurunzhi123456@gmail.com" title="E-Mail → mailto:xurunzhi123456@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kc Beaulo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
